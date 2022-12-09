@@ -275,4 +275,75 @@ CREATE TABLE testTBL6
   FROM employees.employees);   
 SELECT * FROM testTBL6 LIMIT 3
 
-#
+# UPDATE 문
+## 테이블에 입력되어 있는 값을 수정하는 명령어
+UPDATE 테이블이름   
+SET 열1=값1, 열2=값2, …   
+WHERE 조건;수정하는 명령어   
+
+## ‘ Kyoichi’의 Lname을 ‘없음’으로 수정
+USE cookDB;   
+UPDATE testTBL4   
+SET Lname = '없음’   
+WHERE Fname = 'Kyoichi';
+
+## 전체 테이블의 내용을 수정하고 싶을 때는 WHERE 절 생략
+UPDATE buyTBL   
+SET price = price * 1.5;
+
+#  윈도우 함수의 개념
+## 윈도우 함수(window function)
+* 테이블의 행과 행 사이 관계를 쉽게 정의하기 위해 MySQL에서 제공하는 함수
+* OVER절이 들어간 함수
+
+##윈도우 함수와 함께 사용되는 집계 함수
+AVG( ), COUNT( ), MAX( ), MIN( ), STDDEV( ), SUM( ), VARIANCE( ) 등
+
+## 윈도우 함수와 함께 사용되는 비집계 함수
+CUME_DIST( ), DENSE_RANK( ), FIRST_VALUE( ), LAG( ), LAST_VALUE( ), LEAD( ), NTH_VALUE( ),
+NTILE( ), PERCENT_RANK( ), RANK( ), ROW_NUMBER( ) 등
+
+# 순위 함수
+* 결과에 순번 또는 순위(등수)를 매기는 함수
+* 비집계 함수 중에서 RANK( ), NTILE( ), DENSE_RANK( ), ROW_NUMBER( ) 등이 해당
+<순위함수이름>() OVER(   
+[PARTITION BY <partition_by_list>]   
+ORDER BY <order_by_list>)
+
+## 키가 큰 순으로 정렬하기
+회원 테이블(userTBL)에서 키가 큰 순으로 순위 매기기   
+USE cookDB;   
+SELECT ROW_NUMBER() OVER(ORDER BY height DESC)   
+"키큰순위", userName, addr, height   
+  FROM userTBL;
+  
+## 키가 같은 경우 이름의 가나다순으로 정렬
+SELECT ROW_NUMBER() OVER(ORDER BY height DESC,  
+userName ASC) "키큰순위", userName, addr, height   
+  FROM userTBL;
+
+## 각 지역별로 순위 매기기
+SELECT addr, ROW_NUMBER() OVER(PARTITION BY addr   
+ORDER BY height DESC, userName ASC) "지역 별키큰순위“,   
+userName, height   
+  FROM userTBL;
+  
+## 키가 같은 경우 동일한 등수로 처리
+SELECT DENSE_RANK() OVER(ORDER BY height DESC) "키큰순  
+위", userName, addr, height  
+  FROM userTBL;
+  
+##  3등 다음에 4등을 빼고 5등이 나오게 하려면 RANK( ) 함수 사용
+SELECT RANK() OVER(ORDER BY height DESC) "키큰순위",   
+userName, addr, height   
+  FROM userTBL;
+  
+## 전체 인원을 키가 큰 순으로 정렬한 후 몇 개의 그룹으로 분할
+SELECT NTILE(2) OVER(ORDER BY height DESC) "반번호",   
+userName, addr, height   
+  FROM userTBL;
+  
+## 3개 반으로 분리
+SELECT NTILE(4) OVER(ORDER BY height DESC) "반번호",   
+userName, addr, height   
+  FROM userTBL;
