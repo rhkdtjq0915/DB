@@ -31,7 +31,7 @@ CREATE TABLE `my testTBL` (id INT);
 
 ## DROP TABLE 문을 사용하여 테이블 삭제
 DROP TABLE `my TestTBL`;
-
+-------------------------------------------------------
 ## 요약된 SELECT 문의 형식
 SELECT select_expr
 [FROM table_references]   
@@ -51,3 +51,28 @@ USE 데이터베이스이름;   EX)USE employees;
 ## 쿼리 창을 연 후 자신이 작업할 데이터베이스가 선택되어 있는지 먼저 확인하는 습관을 들여야 함
 USE mysql;   
 SELECT * FROM employees;
+
+## 여러 개의 열을 가져오고 싶으면 쉼표(,)로 구분
+SELECT first_name, last_name, gender FROM employees;
+
+## 원하는 열만 검색
+SELECT first_name FROM employees;
+
+# WHERE 절
+## SELECT … FROM 문에 WHERE 절을 추가하면 특정한 조건을 만족하는 데이터만 조회할 수있음
+SELECT 열이름 FROM 테이블이름 WHERE 조건식;
+
+## WHERE 절 없이 cookDB의 회원 테이블(userTBL) 조회
+USE cookDB;   
+SELECT * FROM userTBL;
+
+## 원 테이블(userTBL)에서 강호동의 정보만 조회
+SELECT * FROM userTBL WHERE userName = '강호동';
+
+## 회원 테이블에서 1970년 이후에 출생했고 키가 182cm 이상인 사람의 아이디와 이름을 조회
+SELECT userID, userName FROM userTBL WHERE birthYear >= 1970 AND height >= 182;
+
+## 1970년 이후에 출생했거나 키가 182cm 이상인 사람의 아이디와 이름 조회
+SELECT userID, userName FROM userTBL WHERE birthYear >= 1970 OR height >= 182;
+
+# BETWEEN … AND, IN( ), LIKE 연산자
