@@ -19,3 +19,35 @@
 # SELECT 문 작성하기
 ## 회원 테이블의 모든 데이터 조회
 SELECT * FROM memberTBL;
+
+## 회원 테이블의 이름과 주소만 출력
+SELECT memberName, memberAddress FROM memberTBL;
+
+## ‘토마스’에 대한 정보만 추출
+SELECT * FROM memberTBL WHERE memberName = ‘토마스’;
+--------------------------------------------------------
+## 간단한 테이블을 생성하는 SQL 문 실행
+CREATE TABLE `my testTBL` (id INT);
+
+## DROP TABLE 문을 사용하여 테이블 삭제
+DROP TABLE `my TestTBL`;
+
+## 요약된 SELECT 문의 형식
+SELECT select_expr
+[FROM table_references]   
+[WHERE where_condition]   
+[GROUP BY {col_name |expr |position}]   
+[HAVING where_condition]   
+[ORDER BY {col_name |expr |position}]
+
+## 더 요약된 SELECT 문의 형식
+SELECT 열이름   
+FROM 테이블이름   
+WHERE 조건
+
+## 현재 사용하는 데이터베이스를 지정하거나 변경하는 구문 형식
+USE 데이터베이스이름;   EX)USE employees;
+
+## 쿼리 창을 연 후 자신이 작업할 데이터베이스가 선택되어 있는지 먼저 확인하는 습관을 들여야 함
+USE mysql;   
+SELECT * FROM employees;
