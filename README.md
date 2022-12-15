@@ -25,6 +25,7 @@ SELECT memberName, memberAddress FROM memberTBL;
 
 ## ‘토마스’에 대한 정보만 추출
 SELECT * FROM memberTBL WHERE memberName = ‘토마스’;
+
 --------------------------------------------------------
 ## 간단한 테이블을 생성하는 SQL 문 실행
 CREATE TABLE `my testTBL` (id INT);
